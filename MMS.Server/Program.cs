@@ -1,4 +1,5 @@
 using MMS.Server.Services;
+using MMS.Server.Services.Msi;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +10,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<ImageProcessingService>();
+builder.Services.AddScoped<MsiImageService>();
 
 var app = builder.Build();
 

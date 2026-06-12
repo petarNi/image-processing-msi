@@ -1,0 +1,242 @@
+﻿<Window x:Class="MMS.Client.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MMS Image Client"
+        Height="760"
+        Width="1250"
+        WindowStartupLocation="CenterScreen">
+
+    <Grid Background="#F3F4F6">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Toolbar -->
+        <Border Grid.Row="0"
+                Background="White"
+                Padding="12"
+                BorderBrush="#D1D5DB"
+                BorderThickness="0,0,0,1">
+
+            <StackPanel Orientation="Vertical">
+
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                    <Button x:Name="OpenImageButton"
+                            Content="Open Image"
+                            Width="110"
+                            Height="34"
+                            Margin="0,0,8,0"
+                            Click="OpenImageButton_Click"/>
+
+                    <Button x:Name="OpenMsiButton"
+                            Content="Open MSI"
+                            Width="100"
+                            Height="34"
+                            Margin="0,0,8,0"
+                            Click="OpenMsiButton_Click"/>
+
+                    <Button x:Name="SaveButton"
+                            Content="Save Result"
+                            Width="110"
+                            Height="34"
+                            Margin="0,0,8,0"
+                            Click="SaveButton_Click"/>
+
+                    <Button x:Name="ExportMsiButton"
+                            Content="Export MSI"
+                            Width="110"
+                            Height="34"
+                            Margin="0,0,8,0"
+                            Click="ExportMsiButton_Click"/>
+                    <TextBlock Text="MSI:"
+                            VerticalAlignment="Center"
+                            Margin="8,0,8,0"/>
+
+                    <ComboBox x:Name="MsiCompressionComboBox"
+                            Width="150"
+                            Height="32"
+                            SelectedIndex="0"
+                            Margin="0,0,8,0">
+                        <ComboBoxItem Content="2 - Huffman"/>
+                        <ComboBoxItem Content="4 - MPEG-2 4:2:0"/>
+                    </ComboBox>
+
+                    <Button x:Name="UndoButton"
+                            Content="Undo"
+                            Width="80"
+                            Height="34"
+                            Margin="16,0,8,0"
+                            Click="UndoButton_Click"/>
+
+                    <Button x:Name="RedoButton"
+                            Content="Redo"
+                            Width="80"
+                            Height="34"
+                            Margin="0,0,8,0"
+                            Click="RedoButton_Click"/>
+                    <Button x:Name="ZoomInButton"
+                        Content="Zoom +"
+                        Width="90"
+                        Height="34"
+                        Margin="16,0,8,0"
+                        Click="ZoomInButton_Click"/>
+
+                    <Button x:Name="ZoomOutButton"
+                        Content="Zoom -"
+                        Width="90"
+                        Height="34"
+                        Margin="0,0,8,0"
+                        Click="ZoomOutButton_Click"/>
+
+                    <Button x:Name="ResetZoomButton"
+                        Content="Reset Zoom"
+                        Width="110"
+                        Height="34"
+                        Margin="0,0,8,0"
+                        Click="ResetZoomButton_Click"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Filter:"
+                               VerticalAlignment="Center"
+                               Margin="0,0,8,0"
+                               FontWeight="SemiBold"/>
+
+                    <ComboBox x:Name="FilterComboBox"
+                              Width="210"
+                              Height="32"
+                              Margin="0,0,12,0"
+                              SelectedIndex="0">
+                        <ComboBoxItem Content="invert"/>
+                        <ComboBoxItem Content="brightness"/>
+                        <ComboBoxItem Content="pixelate"/>
+                        <ComboBoxItem Content="emboss-laplacian"/>
+                        <ComboBoxItem Content="edge-enhance"/>
+                        <ComboBoxItem Content="time-warp"/>
+                        <ComboBoxItem Content="jarvis-judice-ninke"/>
+                        <ComboBoxItem Content="colorize-grayscale"/>
+                    </ComboBox>
+
+                    <TextBlock Text="Amount:"
+                               VerticalAlignment="Center"
+                               Margin="0,0,8,0"/>
+
+                    <TextBox x:Name="AmountTextBox"
+                             Width="70"
+                             Height="32"
+                             Text="50"
+                             Margin="0,0,12,0"/>
+
+                    <TextBlock Text="Block size:"
+                               VerticalAlignment="Center"
+                               Margin="0,0,8,0"/>
+
+                    <TextBox x:Name="BlockSizeTextBox"
+                             Width="70"
+                             Height="32"
+                             Text="10"
+                             Margin="0,0,12,0"/>
+
+                    <TextBlock Text="Factor:"
+                               VerticalAlignment="Center"
+                               Margin="0,0,8,0"/>
+
+                    <TextBox x:Name="FactorTextBox"
+                             Width="70"
+                             Height="32"
+                             Text="15"
+                             Margin="0,0,12,0"/>
+
+                    <Button x:Name="ApplyFilterButton"
+                            Content="Apply Filter"
+                            Width="120"
+                            Height="34"
+                            Click="ApplyFilterButton_Click"/>
+
+                    <TextBlock x:Name="StatusTextBlock"
+                               Text="Ready"
+                               VerticalAlignment="Center"
+                               Margin="20,0,0,0"
+                               Foreground="#374151"/>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+
+        <!-- Images -->
+        <Grid Grid.Row="1" Margin="12">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Border Grid.Column="0"
+                    Background="White"
+                    BorderBrush="#D1D5DB"
+                    BorderThickness="1"
+                    CornerRadius="8"
+                    Margin="0,0,6,0"
+                    Padding="10">
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Text="Original"
+                               FontSize="18"
+                               FontWeight="Bold"
+                               Margin="0,0,0,10"/>
+
+                    <ScrollViewer Grid.Row="1"
+                                  HorizontalScrollBarVisibility="Auto"
+                                  VerticalScrollBarVisibility="Auto">
+                        <Image x:Name="OriginalImage"
+                               Stretch="Uniform"/>
+                    </ScrollViewer>
+                </Grid>
+            </Border>
+
+            <Border Grid.Column="1"
+                    Background="White"
+                    BorderBrush="#D1D5DB"
+                    BorderThickness="1"
+                    CornerRadius="8"
+                    Margin="6,0,0,0"
+                    Padding="10">
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Text="Result / Preview"
+                               FontSize="18"
+                               FontWeight="Bold"
+                               Margin="0,0,0,10"/>
+
+                    <ScrollViewer Grid.Row="1"
+                                  HorizontalScrollBarVisibility="Auto"
+                                  VerticalScrollBarVisibility="Auto">
+                        <Image x:Name="ResultImage"
+                               Stretch="Uniform"/>
+                    </ScrollViewer>
+                </Grid>
+            </Border>
+        </Grid>
+
+        <!-- Footer -->
+        <Border Grid.Row="2"
+                Background="White"
+                Padding="10"
+                BorderBrush="#D1D5DB"
+                BorderThickness="0,1,0,0">
+
+            <TextBlock Text="MMS Client - PNG/JPEG/BMP/GIF/MSI | Server: https://localhost:7238"
+                       Foreground="#4B5563"/>
+        </Border>
+    </Grid>
+</Window>   
