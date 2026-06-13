@@ -693,3 +693,11 @@ Implementiran je sopstveni MSI format sa HSV color space-om, Huffman kompresijom
 Sistem je testiran automatizovanim server testovima, manualnim UI testovima i benchmark merenjima nad golden skupom slika.
 
 Projekat ispunjava funkcionalne i nefunkcionalne zahteve zadatka.
+
+## 👨‍💻 Autor
+
+**Petar Nikolić**
+
+Elektronski fakultet Univerziteta u Nišu
+
+GitHub: https://github.com/petarNi
